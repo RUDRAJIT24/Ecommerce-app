@@ -1,4 +1,5 @@
 import express from 'express'
+import bodyParser from 'body-parser';
 import cors from 'cors'
 import 'dotenv/config'
 import connectDB from './config/mongodb.js'
@@ -8,12 +9,14 @@ import productRouter from './routes/productRoute.js'
 import cartRouter from './routes/cartRoute.js'
 import orderRouter from './routes/orderRoute.js'
 
-
 //App Config
 const app  = express()
 const port = process.env.PORT || 4000
 connectDB()
 connectCloudinary()
+
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 //middlewares
 app.use(express.json())
